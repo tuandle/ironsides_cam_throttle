@@ -1,0 +1,7 @@
+<library path="lib/libironsides_reduce_nodelet">
+  <class name="ironsides_reduce/IronsidesReduceNodelet" type="ironsides_reduce::IronsidesReduceNodelet" base_class_type="nodelet::Nodelet">
+    <description>
+      Ironsides camera rate reduction nodelet
+    </description>
+  </class>
+</library>
