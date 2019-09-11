@@ -36,9 +36,11 @@ add_dependencies(${PROJECT_NAME}_nodelet ${catkin_EXPORTED_TARGETS})
 add_executable(ironsides_reduce_node src/nodes/ironsides_reduce_node.cpp)
 target_link_libraries(ironsides_reduce_node ${catkin_LIBRARIES})
 
+MESSAGE("lib path: " ${CATKIN_PACKAGE_LIB_DESTINATION})
+
 # Install nodelet library
 install(TARGETS ${PROJECT_NAME}_nodelet
-  DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
 # Install header files
