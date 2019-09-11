@@ -25,8 +25,8 @@ IronsidesReduce::IronsidesReduce(const ros::NodeHandle& nh,
     queue_size_ = 1;
   }
 
-  first_image_pub_ = it_.advertise("cam0/lowrate/image_raw", queue_size_);
-  second_image_pub_ = it_.advertise("cam1/lowrate/image_raw", queue_size_);
+  first_image_pub_ = it_.advertise("cam0/throttle/image_raw", queue_size_);
+  second_image_pub_ = it_.advertise("cam1/throttle/image_raw", queue_size_);
   imu_cam_sync_ptr_ =
       std::make_shared<message_filters::Synchronizer<ImuCamSyncPolicy>>(
           ImuCamSyncPolicy(queue_size_), imu_sub_, first_image_sub_,
