@@ -12,8 +12,8 @@
 #include <message_filters/pass_through.h>
 #include <message_filters/simple_filter.h>
 #include <message_filters/subscriber.h>
-#include <message_filters/sync_policies/exact_time.h>
 #include <message_filters/sync_policies/approximate_time.h>
+#include <message_filters/sync_policies/exact_time.h>
 #include <message_filters/time_synchronizer.h>
 
 #include <cmath>
@@ -26,7 +26,9 @@ class IronsidesReduce {
   IronsidesReduce(const ros::NodeHandle& nh, const ros::NodeHandle& nh_private);
   void reduceRate(const sensor_msgs::ImuConstPtr& imu_msg_in,
                   const sensor_msgs::ImageConstPtr& cam0_in,
-                  const sensor_msgs::ImageConstPtr& cam1_in);
+                  const sensor_msgs::ImageConstPtr& cam1_in,
+                  const sensor_msgs::ImageConstPtr& cam0_mono_in,
+                  const sensor_msgs::ImageConstPtr& cam1_mono_in);
 
  private:
   int getQueueSize() const;
@@ -39,15 +41,20 @@ class IronsidesReduce {
   // subscribers
   image_transport::SubscriberFilter first_image_sub_;
   image_transport::SubscriberFilter second_image_sub_;
+  image_transport::SubscriberFilter first_image_mono_sub_;
+  image_transport::SubscriberFilter second_image_mono_sub_;
 
   image_transport::Publisher first_image_pub_;
   image_transport::Publisher second_image_pub_;
+  image_transport::Publisher first_image_mono_pub_;
+  image_transport::Publisher second_image_mono_pub_;
 
   /*typedef message_filters::sync_policies::ExactTime<
       sensor_msgs::Imu, sensor_msgs::Image, sensor_msgs::Image>
       ImuCamSyncPolicy;*/
   typedef message_filters::sync_policies::ApproximateTime<
-      sensor_msgs::Imu, sensor_msgs::Image, sensor_msgs::Image>
+      sensor_msgs::Imu, sensor_msgs::Image, sensor_msgs::Image,
+      sensor_msgs::Image, sensor_msgs::Image>
       ImuCamSyncPolicy;
   std::shared_ptr<message_filters::Synchronizer<ImuCamSyncPolicy>>
       imu_cam_sync_ptr_;
