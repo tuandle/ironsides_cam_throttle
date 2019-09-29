@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-	<!-- <include file="$(find xsens_mti_driver)/launch/xsens_mti_node.launch"/> -->
-  <node pkg="nodelet" type="nodelet" name="ir_nodelet_manager" args="manager" output="screen"/>
-  <node pkg="nodelet" type="nodelet" name="ir_nodelet" args="load ironsides_reduce/IronsidesReduceNodelet /ir_nodelet_manager" output="screen">
+	<include file="$(find pirvs_ros)/launch/raw_data.launch"/>
+  <!-- <node pkg="nodelet" type="nodelet" name="sensor_nodelet_manager" args="manager" output="screen"/> -->
+  <node pkg="nodelet" type="nodelet" name="ir_nodelet" args="load ironsides_reduce/IronsidesReduceNodelet sensor_nodelet_manager" output="screen">
   	<param name="queue_size" value="1"/>
   </node>
 </launch>
