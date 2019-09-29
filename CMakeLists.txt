@@ -13,13 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-add_library(${PROJECT_NAME}_nodelet
-	src/nodelets/ironsides_reduce_nodelet.cpp
-	src/ironsides_reduce.cpp
-)
-
 catkin_package(
-	INCLUDE_DIRS include
+  INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}_nodelet
 )
 
@@ -28,10 +23,14 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_library(${PROJECT_NAME}_nodelet
+  src/nodelets/ironsides_reduce_nodelet.cpp
+  src/ironsides_reduce.cpp
+)
 target_link_libraries(${PROJECT_NAME}_nodelet
-	${catkin_LIBRARIES})
-
+  ${catkin_LIBRARIES})
 add_dependencies(${PROJECT_NAME}_nodelet ${catkin_EXPORTED_TARGETS})
+
 
 add_executable(ironsides_reduce_node src/nodes/ironsides_reduce_node.cpp)
 target_link_libraries(ironsides_reduce_node ${catkin_LIBRARIES})
