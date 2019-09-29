@@ -37,7 +37,8 @@ IronsidesReduce::IronsidesReduce(const ros::NodeHandle& nh,
       std::make_shared<message_filters::Synchronizer<ImuCamSyncPolicy>>(
           ImuCamSyncPolicy(queue_size_), imu_sub_, first_image_sub_,
           second_image_sub_, first_image_mono_sub_, second_image_mono_sub_);
-  // imu_cam_sync_ptr_->setInterMessageLowerBound(0, ros::Duration(1 * 1e-3));
+  /*imu_cam_sync_ptr_->setInterMessageLowerBound(0, ros::Duration(1.0 /
+   * 200.0));*/
   imu_cam_sync_ptr_->registerCallback(
       boost::bind(&IronsidesReduce::reduceRate, this, _1, _2, _3, _4, _5));
 }
@@ -48,14 +49,14 @@ void IronsidesReduce::reduceRate(
     const sensor_msgs::ImageConstPtr& cam1_in,
     const sensor_msgs::ImageConstPtr& cam0_mono_in,
     const sensor_msgs::ImageConstPtr& cam1_mono_in) {
-  ROS_INFO_STREAM(std::abs(imu_msg_in->header.stamp.toSec() -
-                           cam0_in->header.stamp.toSec()));
-  if ((std::abs(imu_msg_in->header.stamp.toSec() -
-                cam0_in->header.stamp.toSec())) < 0.00100017) {
+  double diff_time =
+      cam0_in->header.stamp.toSec() - imu_msg_in->header.stamp.toSec();
+  if (diff_time >= -0.000999928 && diff_time < 0.000999928) {
     first_image_pub_.publish(cam0_in);
     second_image_pub_.publish(cam1_in);
     first_image_mono_pub_.publish(cam0_mono_in);
     second_image_mono_pub_.publish(cam1_mono_in);
+    ROS_INFO_STREAM(diff_time);
   }
 }
 
