@@ -3,6 +3,6 @@
 	<include file="$(find pirvs_ros)/launch/raw_data.launch"/>
   <!-- <node pkg="nodelet" type="nodelet" name="sensor_nodelet_manager" args="manager" output="screen"/> -->
   <node pkg="nodelet" type="nodelet" name="ir_nodelet" args="load ironsides_reduce/IronsidesReduceNodelet sensor_nodelet_manager" output="screen">
-  	<param name="queue_size" value="1"/>
+  	<param name="queue_size" value="2"/>
   </node>
 </launch>
