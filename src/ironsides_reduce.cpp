@@ -56,7 +56,7 @@ void IronsidesReduce::reduceRate(
     second_image_pub_.publish(cam1_in);
     first_image_mono_pub_.publish(cam0_mono_in);
     second_image_mono_pub_.publish(cam1_mono_in);
-    ROS_INFO_STREAM(diff_time);
+    ROS_INFO_THROTTLE(60, "%f", diff_time);
   }
 }
 
